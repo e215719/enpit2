@@ -31,7 +31,7 @@ def upload():
     # コンソールに出力
     print(names)
     # カレントディレクトリ内の名前を取得
-    names = os.listdir('testapp')
+    names = os.listdir('testapp/static')
     # コンソールに出力
     print(names)
     # ファイルを保存
