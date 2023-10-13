@@ -1,6 +1,7 @@
 # Flaskとopencvをインポート
 from flask import Flask, render_template, request
 import cv2
+import os
 
 # Flaskアプリを作成
 app = Flask(__name__)
@@ -21,6 +22,10 @@ def upload():
         return 'ファイルがありません'
     # ファイル名を取得
     filename = file.filename
+    # 現在のカレントディレクトリを取得
+    current_directory = os.getcwd()
+    # コンソールに出力
+    print(current_directory)
     # ファイルを保存
     file.save('testapp/static/up/' + filename)
     # 画像を読み込む
