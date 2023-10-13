@@ -30,12 +30,12 @@ def upload():
     names = os.listdir()
     # コンソールに出力
     print(names)
-    # ファイルを保存
-    file.save('/opt/render/project/src/testapp/static/up/' + filename)
     # カレントディレクトリ内の名前を取得
     names = os.listdir('testapp')
     # コンソールに出力
     print(names)
+    # ファイルを保存
+    file.save('/opt/render/project/src/testapp/static/up/' + filename)
     # 画像を読み込む
     img = cv2.imread('/opt/render/project/src/testapp/static/up/' + filename)
     # 画像の加工を行う（ここではグレースケールに変換）
