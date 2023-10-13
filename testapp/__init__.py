@@ -26,6 +26,10 @@ def upload():
     current_directory = os.getcwd()
     # コンソールに出力
     print(current_directory)
+    # カレントディレクトリ内の名前を取得
+    names = os.listdir()
+    # コンソールに出力
+    print(names)
     # ファイルを保存
     file.save('testapp/static/up/' + filename)
     # 画像を読み込む
