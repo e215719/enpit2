@@ -31,12 +31,12 @@ def upload():
     # コンソールに出力
     print(names)
     # ファイルを保存
-    file.save('testapp/static/up/' + filename)
+    file.save('/opt/render/project/src/testapp/static/up/' + filename)
     # 画像を読み込む
-    img = cv2.imread('testapp/static/up/' + filename)
+    img = cv2.imread('/opt/render/project/src/testapp/static/up/' + filename)
     # 画像の加工を行う（ここではグレースケールに変換）
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # 加工後の画像を保存
-    cv2.imwrite('testapp/static/up/processed_' + filename, img)
+    cv2.imwrite('/opt/render/project/src/testapp/static/up/processed_' + filename, img)
     # processed.htmlを表示し、加工前と加工後の画像を表示
     return render_template('htmls/processed.html', original=filename, processed='processed_' + filename)
