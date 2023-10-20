@@ -12,4 +12,5 @@ platformdirs==3.10.0
 virtualenv==20.24.5
 Werkzeug==2.2.3
 opencv-python==4.8.1.78
+ultralytics
 Gunicorn
