@@ -84,6 +84,9 @@ def upload():
     # items = os.listdir("./testapp/static")
     # print(items)
     
+    # スレッドが終了するまで待機する（同期）
+    thread.join()
+    
     #while not processing_done: pass
 
     return render_template('htmls/processed.html', original=filename, processed=filename)
