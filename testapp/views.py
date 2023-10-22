@@ -9,6 +9,14 @@ from ultralytics import YOLO
 # YOLOv8のセグメンテーションモデルをロード
 model = YOLO(model="yolov8n-seg.pt")
 
+# threadingモジュールをインポート
+import threading
+
+#画像処理を行う関数を定義
+def process_image(filename):
+    #画像の加工を行う（ここではYOLOv8でセグメンテーションを行う）
+    model.predict(source='testapp/static/up/' + filename, save=True, project='testapp/static/', name="down", exist_ok=True)
+
 # ルートディレクトリにアクセスしたときの処理
 @app.route('/')
 def index():
@@ -28,7 +36,11 @@ def upload():
     # ファイルを保存
     file.save('testapp/static/up/' + filename)
     # 画像処理を別のスレッドで実行する（非同期）
-    model.predict(source='testapp/static/up/' + filename, save=True, project='testapp/static/', name="down", exist_ok=True)
+    #model.predict(source='testapp/static/up/' + filename, save=True, project='testapp/static/', name="down", exist_ok=True)
+    thread = threading.Thread(target=process_image, args=(filename,))
+    thread.start()
+    # 画像処理を別のスレッドで実行する（非同期）
+    #model.predict(source='testapp/static/up/' + filename, save=True, project='testapp/static/', name="down", exist_ok=True)
     
     # testapp/static/down/filenameというパスを作る
     file_path = os.path.join('testapp/static/down', filename)
