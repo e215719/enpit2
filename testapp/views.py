@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request
 from testapp import app
 import cv2
 import os
@@ -40,17 +40,8 @@ def upload():
     # 画像処理を別のスレッドで実行する（非同期）
     thread = threading.Thread(target=process_image, args=(filename,))
     thread.start()
-    # /showにリダイレクトする
-    return redirect(url_for('show', filename=filename))
 
-# /showにGETリクエストが送られたときの処理
-@app.route('/show/<filename>')
-def show(filename):
-    # 画像処理が終わったかどうかを確認する
     file_path = os.path.join('testapp/static/down', filename)
-    if os.path.exists(file_path):
-        # 画像処理が終わっていれば、processed.htmlを表示
-        return render_template('htmls/processed.html', original=filename, processed=filename)
-    else:
-        # 画像処理が終わっていなければ、待機メッセージを表示
-        return '画像の加工中です。しばらくお待ちください。'
+    while not os.path.exists(file_path): pass
+
+    return render_template('htmls/processed.html', original=filename, processed=filename)
