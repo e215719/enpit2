@@ -85,8 +85,24 @@ def upload():
     # print(items)
     
     # スレッドが終了するまで待機する（同期）
-    thread.join()
+    #thread.join()
     
     #while not processing_done: pass
+
+    # while processing_done:
+    #     # testapp/static/upの中のファイルを取得
+    #     files = os.listdir('testapp/static/down')
+    #     # パターンにマッチするファイルを削除
+    #     for file in files:
+    #         if file == filename:
+    #             processing_done = True
+                
+    # while not processing_done: 
+    #     files = os.listdir("testapp/static/down"); 
+    #     processing_done = any(file == filename for file in files)
+    
+    # testapp/static/down/filenameというパスを作る
+    file_path = os.path.join('testapp/static/down', filename)
+    while not os.path.exists(file_path): pass
 
     return render_template('htmls/processed.html', original=filename, processed=filename)
