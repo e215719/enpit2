@@ -15,11 +15,6 @@ import threading
 processing_done = False
 
 def sakujyo():
-
-    # カレントディレクトリのファイルとフォルダの一覧を取得
-    items = os.listdir("./testapp/static")
-    print("jiji")
-    print(items)
     
     # 削除したいフォルダのパスを指定
     folder = 'testapp/static/down'
@@ -51,15 +46,11 @@ def sakujyo():
 def process_image(filename):
     global processing_done
     # 画像を読み込む
-    img = cv2.imread('testapp/static/up/' + filename)
+    #cv2.imread('testapp/static/up/' + filename)
     # 画像の加工を行う（ここではYOLOv8でセグメンテーションを行う）
-    result = model.predict(source='testapp/static/up/' + filename, save=True, project='testapp/static/', name="down")
+    model.predict(source='testapp/static/up/' + filename, save=True, project='testapp/static/', name="down", exist_ok=True)
     
     processing_done = True
-
-    # カレントディレクトリのファイルとフォルダの一覧を取得
-    items = os.listdir("./testapp/static")
-    print(items)
     
 def done_false():
     global processing_done
@@ -75,7 +66,7 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     done_false()
-    sakujyo()
+    #sakujyo()
     # リクエストからファイルを取得
     file = request.files['file']
     # ファイルが存在しない場合はエラーメッセージを表示
@@ -89,9 +80,9 @@ def upload():
     thread = threading.Thread(target=process_image, args=(filename,))
     thread.start()
 
-    # カレントディレクトリのファイルとフォルダの一覧を取得
-    items = os.listdir("./testapp/static")
-    print(items)
+    # # カレントディレクトリのファイルとフォルダの一覧を取得
+    # items = os.listdir("./testapp/static")
+    # print(items)
     
     while not processing_done: pass
 
