@@ -84,7 +84,6 @@ def upload():
     # items = os.listdir("./testapp/static")
     # print(items)
     
-    while not processing_done: pass
+    #while not processing_done: pass
 
-    # processed.htmlを表示し、加工前と加工後の画像を表示（加工後の画像はまだ生成されていない可能性がある）
     return render_template('htmls/processed.html', original=filename, processed=filename)

@@ -15,7 +15,6 @@
     </div>
 </div>
 
-
 <h1>画像加工アプリ</h1>
 <p>画像の加工が完了しました</p>
 <!-- 加工前と加工後の画像を表示 -->
@@ -23,4 +22,23 @@
 <img src="static/down/{{ processed }}" alt="processed" width="49%">
 
 <script src="{{ url_for('static', filename='javascript/sample.js') }}"></script>
+<script> // 加工後の画像のURLを生成 
+    var processed_url = “static/down/” + “{{ processed }}”; 
+    // 加工後の画像が存在するかどうかを確認する関数 
+    function check_image(url) { var http = new XMLHttpRequest(); 
+        http.open(‘HEAD’, url, false); http.send(); return http.status != 404; 
+    } 
+    // 加工後の画像が存在するまで繰り返しチェックする関数 
+    function loop_check() { 
+        if (check_image(processed_url)) { 
+            // 画像が存在したらimgタグにセットする 
+            document.getElementById(“processed”).src = processed_url; 
+        } else { 
+            // 画像が存在しなかったら1秒後に再度チェックする 
+            setTimeout(loop_check, 1000); 
+        } 
+    } 
+    // ページ読み込み時にチェックを開始する 
+    loop_check(); 
+</script>
 {% endblock %}
