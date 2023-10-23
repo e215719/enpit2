@@ -15,4 +15,3 @@ opencv-python==4.8.1.78
 Gunicorn
 ultralytics
 numpy
-gevent==22.10.2
