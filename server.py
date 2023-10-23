@@ -1,5 +1,8 @@
 # server.py
-import greenlet
+from gevent import monkey
+monkey.patch_all()
+
+from flask import Flask
 from testapp import app
 
 if __name__ == "__main__":
