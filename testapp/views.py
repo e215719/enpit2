@@ -1,6 +1,7 @@
 from flask import render_template, request
 from testapp import app
 import cv2
+import os
 # ultralyticsのYOLOモジュールをインポート
 from ultralytics import YOLO
 
@@ -25,7 +26,6 @@ def upload():
     filename = file.filename
     # ファイルを保存
     file.save('testapp/static/up/' + filename)
-    # 画像処理を別のスレッドで実行する（非同期）
     model.predict(source='testapp/static/up/' + filename, save=True, project='testapp/static/', name="down", exist_ok=True)
 
     return render_template('htmls/processed.html', original=filename, processed=filename)

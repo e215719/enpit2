@@ -1,5 +1,6 @@
+# server.py
+import greenlet
 from testapp import app
 
-if __name__ == '__main__':
-    #app.run()
-    app.run(host='0.0.0.0', port=756)
+if __name__ == "__main__":
+    app.run()
