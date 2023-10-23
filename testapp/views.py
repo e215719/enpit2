@@ -15,6 +15,9 @@ def process_image(filename):
     model = YOLO(model="yolov8n-seg.pt")
     #画像の加工を行う（ここではYOLOv8でセグメンテーションを行う）
     model.predict(source='testapp/static/up/' + filename, save=True, project='testapp/static/', name="down", exist_ok=True)
+    # カレントディレクトリのファイルとフォルダの一覧を取得
+    items = os.listdir("./testapp/static/down")
+    print(items)
 
 # ルートディレクトリにアクセスしたときの処理
 @app.route('/')
