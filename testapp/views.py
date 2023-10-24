@@ -46,6 +46,5 @@ def upload():
     file_path = os.path.join('testapp/static/down', filename)
 
     while True:
-        print("加工中")
         if os.path.exists(file_path):
             return render_template('htmls/processed.html', original=filename, processed=filename)
