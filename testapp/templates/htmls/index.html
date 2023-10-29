@@ -15,6 +15,16 @@
 <!-- ファイル選択とアップロードのフォーム -->
 <form action="/upload" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
+    <p>顔に適用する処理を選択してください</p>
+    <!-- ラジオボタンで処理を選択 -->
+    <input type="radio" name="option" value="mosaic" checked>モザイク
+    <input type="radio" name="option" value="blur">ぼかし
+    <input type="radio" name="option" value="stamp">スタンプ
+    <!-- スタンプ用の画像を選択するフォームを追加する -->
+    <div id="stamp_form" style="display: none;">
+        <p>スタンプ用の画像ファイルを選択してください</p>
+        <input type="file" name="stamp">
+    </div>
     <input type="submit" value="アップロード">
 </form>
 
