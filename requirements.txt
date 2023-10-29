@@ -14,3 +14,4 @@ Werkzeug==2.2.3
 opencv-python==4.8.1.78
 Gunicorn
 numpy
+face_recognition
