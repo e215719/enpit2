@@ -1,14 +1,20 @@
 from flask import render_template, request, send_from_directory
 from testapp import app
 import cv2
-import dlib
 import os
-
-detector = dlib.get_frontal_face_detector()
 
 @app.route('/')
 def index():
     return render_template('htmls/index.html')
+
+# dlibをインポートする行を削除
+# import dlib
+
+# 代わりに使うライブラリをインポート
+# 例えばface_recognitionを使う場合
+import face_recognition
+
+# detector = dlib.get_frontal_face_detector() を削除
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -18,18 +24,24 @@ def upload():
     filename = file.filename
     file.save('testapp/static/up/' + filename)
     img = cv2.imread('testapp/static/up/' + filename)
-    faces = detector(img)
+    # faces = detector(img) を変更
+    # 例えばface_recognitionを使う場合
+    faces = face_recognition.face_locations(img)
     option = request.form.get('option')
     if option == 'mosaic':
         for face in faces:
-            x1, y1, x2, y2 = face.left(), face.top(), face.right(), face.bottom()
+            # x1, y1, x2, y2 = face.left(), face.top(), face.right(), face.bottom() を変更
+            # 例えばface_recognitionを使う場合
+            y1, x2, y2, x1 = face
             face_img = img[y1:y2, x1:x2]
             face_img = cv2.resize(face_img, (10, 10))
             face_img = cv2.resize(face_img, (x2-x1, y2-y1), interpolation=cv2.INTER_NEAREST)
             img[y1:y2, x1:x2] = face_img # この行をインデントしてfor文の外に出す
     elif option == 'blur':
         for face in faces:
-            x1, y1, x2, y2 = face.left(), face.top(), face.right(), face.bottom()
+            # x1, y1, x2, y2 = face.left(), face.top(), face.right(), face.bottom() を変更
+            # 例えばface_recognitionを使う場合
+            y1, x2, y2, x1 = face
             face_img = img[y1:y2, x1:x2]
             face_img = cv2.blur(face_img, (30, 30))
             img[y1:y2, x1:x2] = face_img # この行をインデントしてfor文の外に出す
@@ -41,7 +53,9 @@ def upload():
         stamp_file.save('testapp/static/stamp/' + stamp_filename)
         stamp = cv2.imread('testapp/static/stamp/' + stamp_filename, cv2.IMREAD_UNCHANGED) # cv2.IMREAD_UNCHANGEDオプションを追加する
         for face in faces:
-            x1, y1, x2, y2 = face.left(), face.top(), face.right(), face.bottom()
+            # x1, y1, x2, y2 = face.left(), face.top(), face.right(), face.bottom() を変更
+            # 例えばface_recognitionを使う場合
+            y1, x2, y2, x1 = face
             face_img = img[y1:y2, x1:x2]
             stamp_resized = cv2.resize(stamp, (x2-x1, y2-y1))
             stamp_mask = stamp_resized[:, :, 3]
@@ -56,4 +70,4 @@ def upload():
 
 @app.route('/download/<filename>')
 def download(filename):
-    return send_from_directory('testapp/static/down', filename, as_attachment=True)
+    return send_from_directory('testapp/static/down', 'processed_' + filename, as_attachment=True)
